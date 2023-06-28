@@ -33,8 +33,17 @@ class ProfileController extends Controller
         $this->getSharedData($profile);
 
         return view("profile-posts", [
-            "posts" => $profile->posts()->get(),
+            "posts" => $profile->posts()->latest()->get(),
         ]);
+    }
+
+    public function profileRaw (User $profile) {
+        return response()->json(
+            [
+                "theHTML" => view("profile-posts-only", ["posts" => $profile->posts()->latest()->get()])->render(),
+                "docTitle" => $profile->username . " Profile"
+            ]
+        );
     }
 
     public function profileFollowers (User $profile) {
@@ -46,6 +55,15 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function profileFollowersRaw (User $profile) {
+        return response()->json(
+            [
+                "theHTML" => view("profile-followers-only", ["followers" => $profile->followers()->latest()->get()])->render(),
+                "docTitle" => $profile->username . " Followers"
+            ]
+        );
+    }
+
     public function profileFollowing (User $profile) {
 
         $this->getSharedData($profile);
@@ -55,4 +73,12 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function profileFollowingRaw (User $profile) {
+        return response()->json(
+            [
+                "theHTML" => view("profile-following-only", ["following" => $profile->followingTheseUseres()->latest()->get()])->render(),
+                "docTitle" => $profile->username . " Follows"
+            ]
+        );
+    }
 }

@@ -34,7 +34,7 @@
             <a href="/profile/{{ $sharedData["username"] }}/following" class="profile-nav-link nav-item nav-link {{ Request::segment(3) === "following" ? "active" : "" }} ">Following: {{ $sharedData["followingCount"] }}</a>
         </div>
     
-        <div class="profile-slot-contet">
+        <div class="profile-slot-content">
             {{ $slot }}
         </div>
 

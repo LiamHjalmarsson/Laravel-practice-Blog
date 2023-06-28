@@ -58,6 +58,13 @@ Route::get("/profile/{profile:username}", [ProfileController::class, "profile"])
 Route::get("/profile/{profile:username}/followers",[ProfileController::class, "profileFollowers"]);
 Route::get("/profile/{profile:username}/following",[ProfileController::class, "profileFollowing"]);
 
+Route::middleware("cache.headers:public;max_age=20;etag")->group(function () {
+    Route::get("/profile/{profile:username}/raw", [ProfileController::class, "profileRaw"]); //->middleware("cache.headers:public;max_age=20;etag");
+    Route::get("/profile/{profile:username}/followers/raw",[ProfileController::class, "profileFollowersRaw"]);
+    Route::get("/profile/{profile:username}/following/raw",[ProfileController::class, "profileFollowingRaw"]);
+});
+
+
 // Chat route
 Route::post('/send-chat-message', function (Request $request) {
     $formFields = $request->validate([
@@ -109,3 +116,5 @@ Route::post('/send-chat-message', function (Request $request) {
 // php artisan migrate:fresh --seed carfuel erase all tables and data '
 
 //  php artisan event:generate
+
+// php artisan queue:work
