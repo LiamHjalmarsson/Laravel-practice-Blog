@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\OurExampleEvent;
+use App\Models\Post;
 use App\Models\User;
 // A migration has to do with the database.
 
@@ -17,18 +17,51 @@ use App\Models\User;
 // A model also is how we define our relationships.
 
 use Illuminate\Http\Request;
+use App\Events\OurExampleEvent;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
 
+    public function loginApi (Request $request) {
+        $inComingFileds = $request->validate(
+            [
+                "username" => "required",
+                "password" => "required",
+            ]
+        );
+
+        if (auth()->attempt($inComingFileds)) {
+            $user = User::where("username", $inComingFileds["username"])->first();
+            $token = $user->createToken("ourapptoken")->plainTextToken;
+            return $token;
+        }
+
+        return "Sorry";
+    }
+
     public function showCorrectHomePage () {
         if (auth()->check()) {
             return view('homepage-feed', ['posts' => auth()->user()->feedPosts()->latest()->paginate(4)]);
         } else {
-            return view("homepage");
+            // if (Cache::has('postCount')) {
+            //     $postCount = Cache::get('postCount');
+            // } else {
+            //     sleep(5);
+            //     $postCount = Post::count();
+            //     Cache::put("postCount", $postCount, 10);
+            // }
+
+            $postCount = Cache::remember("postCount", 10, function () {
+                return Post::count();
+            });
+
+            return view("homepage", [
+                "postCount" => $postCount,
+            ]);
         }
     }
 
