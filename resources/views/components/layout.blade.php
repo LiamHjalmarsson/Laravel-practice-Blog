@@ -8,9 +8,9 @@
 
         <title> 
             @isset($doctitle)
-                {{ $doctitle }} | OurApp
+                {{ $doctitle }} | Form
             @else 
-                OurApp
+                Form
             @endisset
         </title>
         
@@ -49,13 +49,13 @@
                         @csrf
                         <div class="row align-items-center">
                             <div class="col-md mr-0 pr-md-0 mb-3 mb-md-0">
-                            <input name="loginusername" class="form-control form-control-sm input-dark" type="text" placeholder="Username" autocomplete="off" />
+                                <input name="loginusername" class="form-control form-control-sm input-dark" type="text" placeholder="Username" autocomplete="off" />
                             </div>
                             <div class="col-md mr-0 pr-md-0 mb-3 mb-md-0">
-                            <input name="loginpassword" class="form-control form-control-sm input-dark" type="password" placeholder="Password" />
+                                <input name="loginpassword" class="form-control form-control-sm input-dark" type="password" placeholder="Password" />
                             </div>
                             <div class="col-md-auto">
-                            <button class="btn btn-primary btn-sm">Sign In</button>
+                                <button class="btn btn-primary btn-sm">Sign In</button>
                             </div>
                         </div>
                     </form>
@@ -95,6 +95,7 @@
                 class="chat-wrapper shadow borde-top border-left border-rigth">
             </div>
         @endauth
+        
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
